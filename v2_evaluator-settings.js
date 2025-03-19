@@ -6,6 +6,11 @@ function getDiet(val) {
     return diet[choice];
 }
 
+function getNbFlights(valNbFlightsTotal, valNbFlights) {
+    let totalChoice = extractSelectedChoices(valNbFlightsTotal); // 0 if no, 1 if yes
+    return (totalChoice != 0) ? parseInt(valNbFlights) : 0;
+}
+
 function extractSelectedChoices(answer, forceReturnArray = false) {
     let NO_ANSWER = 0;
     var indices = [];
@@ -34,13 +39,14 @@ function parseIntOrZero(answer) {
     return isNaN(parsed) ? 0 : parsed;
 }
 
-/* ---------------------------------------------------------------------*/
-/* Transform */
+
 
 function formatSurveySettings(data) {
 
     var surveySettings = {
         diet: getDiet(data.q1), 
+        numShortFlights: getNbFlights(data.q9, data.q10),
+
     };
 
     return surveySettings;
