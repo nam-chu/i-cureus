@@ -15,7 +15,7 @@ function getStartingTotal(surveySettings) {
 }
 
 function buildEvaluatorSettings(surveySettings) {
-    evaluatorSettings = {
+     evaluatorSettings = {
         // global settings
         enableDebug: surveySettings.enableDebug,
         language: surveySettings.language,
@@ -38,10 +38,11 @@ function buildEvaluatorSettings(surveySettings) {
 function calculateActualValues(settings) {
 
     var actualDiet = calculateDiet(settings);
+    var actualTotal = actualDiet;
     var actual = {
         actualDiet,
-        actualTotal
-    }
+        actualTotal    
+    };
     return actual;
 }
 
