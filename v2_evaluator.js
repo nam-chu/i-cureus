@@ -55,14 +55,19 @@ function buildEvaluatorSettings(surveySettings) {
 
     evaluatorSettings.initialDiet = calculateDiet(evaluatorSettings);
     evaluatorSettings.initialMobility = calculateMobility(evaluatorSettings);
+    return evaluatorSettings;
 }
 
 function calculateActualValues(settings) {
     
     var actualMobility = calculateMobility(settings);
     var actualDiet = calculateDiet(settings);
-    var actualTotal = actualMobility + actualDiet;
-    return actualTotal;
+    var actual = {
+        actualDiet,
+        actualMobility,
+        actualTotal
+    }
+    return actual;
 }
 
 function calculateDiet(dietSettings) {
