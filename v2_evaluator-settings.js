@@ -45,8 +45,7 @@ function formatSurveySettings(data) {
 
     var surveySettings = {
         diet: getDiet(data.q1), 
-        numShortFlights: getNbFlights(data.q9, data.q10),
-
+        numShortFlights: getNbFlights(data.q2, data.q3)
     };
 
     return surveySettings;
