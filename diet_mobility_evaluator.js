@@ -24,6 +24,13 @@ const flightParameter = new Map([
     ]
 ]);
 
+const fuelParameter = new Map([
+    ["petrol", 1.53],
+    ["diesel", 1.54],
+    ["phev", 0.21],
+    ["bev", 0.21]
+]);
+
 const carParameter = new Map([
     ["petrol-small", new Map([
         ["co2", 235]
@@ -67,12 +74,7 @@ const carParameter = new Map([
    ]
 ]);
 
-const fuelParameter = new Map([
-    ["petrol", 1.53],
-    ["diesel", 1.54],
-    ["phev", 0.21],
-    ["bev", 0.21]
-]);
+
 
 
 function getStartingTotal(surveySettings) {
@@ -121,7 +123,8 @@ function buildEvaluatorSettings(surveySettings) {
             selected: false,
             enabled: true,
             visible: surveySettings.hasAccessToCar,
-            carKilometrageYearly: surveySettings.carKilometrageYearly
+            carKilometrageYearly: surveySettings.carKilometrageYearly,
+            select: 1.0
         },
         compensateKilometrageCarByNone: {
             enabled: true,
@@ -134,13 +137,14 @@ function buildEvaluatorSettings(surveySettings) {
             enabled: true,
             visible: surveySettings.ownsCar,
             car: surveySettings.car,
-            selectCar: surveySettings.car,
+            selectCar: surveySettings.car
         }
 
     };
 
     evaluatorSettings.initialMobility = calculateMobility(evaluatorSettings);
     evaluatorSettings.initialDiet = calculateDiet(evaluatorSettings);
+    evaluatorSettings.initialCar = calculateCar(evaluatorSettings);
     return evaluatorSettings;
 }
 
@@ -148,10 +152,12 @@ function calculateActualValues(settings) {
 
     var actualDiet = calculateDiet(settings);
     var actualMobility = calculateMobility(settings);
-    var actualTotal = actualDiet + actualMobility;
+    var actualCar = calculateCar(settings);
+    var actualTotal = actualDiet + actualMobility + actualCar;
     var actual = {
         actualDiet,
         actualMobility,
+        actualCar,
         actualTotal    
     };
     return actual;
@@ -170,14 +176,7 @@ function calculateDiet(dietSettings) {
 }
 
 function calculateMobility(mobilitySettings) {
-    var mobility = 0;
-    if (mobilitySettings.replaceCar.car != "") {
-    var carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
-    var actualCarKilometrage = carKilometrage;
-    var carCo2 = carParameter.get(actualCar).get("co2");
-    var carValue = carCo2 *actualCarKilometrage / 1_000_000;
-    mobility += carValue;
-    }
+    
     flightsValue = 0;
     numShortFlights = mobilitySettings.shortFlights.numShortFlights;
     numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
@@ -199,4 +198,19 @@ function calculateMobility(mobilitySettings) {
     mobility += flightsValue;
     return mobility;
 }
+function calculateCar(mobilitySettings){
+    var mobility = 0;
 
+    if (mobilitySettings.replaceCar.car != "") {
+        var carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
+        var actualCarKilometrage = carKilometrage;
+    }
+    if (mobilitySettings.reduceKilometrageCar.selected) {
+        actualCarKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly * (1 - mobilitySettings.reduceKilometrageCar.select);
+    }
+     
+    var carCo2 = carParameter.get(actualCar).get("co2");
+    var carValue = carCo2 *actualCarKilometrage / 1000000;
+    mobility += carValue;
+    return mobility;
+}
