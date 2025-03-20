@@ -90,8 +90,8 @@ function formatSurveySettings(data) {
         numLongFlights: getNbFlights(data.q2, data.q5),
         hasAccessToCar: getCarAccess(data.q6),
         ownsCar: getOwnsCar(data.q7),
-        carKilometrageYearly: parseIntOrZero(data.q8),
-        car: getCar(data.q9, data.q10), // petrol-small, petrol-medium, petrol-large, diesel-medium, diesel-large, phev-medium, phev-large, bev-small, bev-medium, bev-large
+        carKilometrageYearly: parseIntOrZero(data.q10),
+        car: getCar(data.q8, data.q9), // petrol-small, petrol-medium, petrol-large, diesel-medium, diesel-large, phev-medium, phev-large, bev-small, bev-medium, bev-large
     };
 
     return surveySettings;
