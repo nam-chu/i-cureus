@@ -42,7 +42,9 @@ function formatSurveySettings(data) {
 
     var surveySettings = {
         diet: getDiet(data.q1),
-        numShortFlights: getNbFlights(data.q2, data.q3)
+        numShortFlights: getNbFlights(data.q2, data.q3),
+        numMediumFlights: getNbFlights(data.q2, data.q4),
+        numLongFlights: getNbFlights(data.q2, data.q5),
     };
 
     return surveySettings;
