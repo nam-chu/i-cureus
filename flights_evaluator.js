@@ -49,7 +49,23 @@ function buildEvaluatorSettings(surveySettings) {
             enabled: true,
             visible: surveySettings.numShortFlights > 0,
             numShortFlights: surveySettings.numShortFlights,
-            select: 1}
+            select: 1
+        },
+        mediumFlights: {
+            selected: false,
+            enabled: true,
+            visible: surveySettings.numMediumFlights > 0,
+            numMediumFlights: surveySettings.numMediumFlights,
+            select: 1,
+        },
+
+        longFlights: {
+            selected: false,
+            enabled: true,
+            visible: surveySettings.numLongFlights > 0,
+            numLongFlights: surveySettings.numLongFlights,
+            select: 1
+        }
     };
 
     evaluatorSettings.initialMobility = calculateMobility(evaluatorSettings);
@@ -85,12 +101,24 @@ function calculateDiet(dietSettings) {
 function calculateMobility(mobilitySettings) {
 
     flightsValue = 0;
+    numShortFlights = mobilitySettings.shortFlights.numShortFlights;
+    numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
+    numLongFlights = mobilitySettings.longFlights.numLongFlights;
     var mobility = 0;
+    
     if (mobilitySettings.shortFlights.selected) {
         numShortFlights -= mobilitySettings.shortFlights.select;  
     } 
     numShortFlights = mobilitySettings.shortFlights.numShortFlights;
+    if (mobilitySettings.mediumFlights.selected) {
+        numMediumFlights -= mobilitySettings.mediumFlights.select;
+    }
+    if (mobilitySettings.longFlights.selected) {
+            numLongFlights -= mobilitySettings.longFlights.select;
+    }
     flightsValue += numShortFlights * flightParameter.get("short").get("co2");
+    flightsValue += numMediumFlights * flightParameter.get("medium").get("co2");
+    flightsValue += numLongFlights * flightParameter.get("long").get("co2");
     mobility += flightsValue;
     return mobility;
 }
