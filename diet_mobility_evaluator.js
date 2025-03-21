@@ -174,21 +174,55 @@ function buildEvaluatorSettings(surveySettings) {
             enabled: true,
             visible: surveySettings.hasAccessToCar,
             carKilometrageYearly: surveySettings.carKilometrageYearly,
-            select: 1.0
+            select: 1.0,
+            investment: "",
+            annual: "",
+        },
+
+        compensateKilometrageCarByPtShort: {
+            enabled: true,
+            visible: surveySettings.hasAccessToCar,
+            compensatedKilometrageYearly: 0.0,
+            select: 0.0,
+            investment: "",
+            annual: "",
+        },
+
+        compensateKilometrageCarByPtLong: {
+            enabled: true,
+            visible: surveySettings.hasAccessToCar,
+            compensatedKilometrageYearly: 0.0,
+            select: 0.0,
+            investment: "",
+            annual: "",
         },
         compensateKilometrageCarByNone: {
             enabled: true,
             visible: surveySettings.hasAccessToCar,
             compensatedKilometrageYearly: 0.0,
-            select: 0.0
+            select: 0.0,
+            investment: "",
+            annual: "",
         },
+
         replaceCar: {
             selected: false,
             enabled: true,
             visible: surveySettings.ownsCar,
             car: surveySettings.car,
-            selectCar: surveySettings.car
-        }
+            selectCar: surveySettings.car,
+            investment: "",
+            annual: "",
+        },
+
+        sellCar: {
+            selected: false,
+            enabled: true,
+            visible: surveySettings.ownsCar,
+            carValue: surveySettings.carValue,
+            investment: "",
+            annual: "",
+        },
 
     };
 
