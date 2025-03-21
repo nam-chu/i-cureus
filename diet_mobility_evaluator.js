@@ -33,43 +33,93 @@ const fuelParameter = new Map([
 
 const carParameter = new Map([
     ["petrol-small", new Map([
-        ["co2", 235]
+        ["co2", 235],
+        ["fuel-consumption", 6.5],
+        ["electricity-consumption", 0.0],
+        ["price", 17500],
+        ["fuel-price", fuelParameter.get("petrol")],
+        ["electricity-price", 0.0],
         ])
     ],
     ["petrol-medium", new Map([
-        ["co2", 245]
+        ["co2", 245],
+        ["fuel-consumption", 7.1],
+        ["electricity-consumption", 0.0],
+        ["price", 20000],
+        ["fuel-price", fuelParameter.get("petrol")],
+        ["electricity-price", 0.0],
         ])
     ],
     ["petrol-large", new Map([
-        ["co2", 270]
+        ["co2", 270],
+        ["fuel-consumption", 7.9],
+        ["electricity-consumption", 0.0],
+        ["price", 33000],
+        ["fuel-price", fuelParameter.get("petrol")],
+        ["electricity-price", 0.0],
         ])
     ],
     ["diesel-medium", new Map([
-        ["co2", 245]
+        ["co2", 245],
+        ["fuel-consumption", 5.9],
+        ["electricity-consumption", 0.0],
+        ["price", 40000],
+        ["fuel-price", fuelParameter.get("diesel")],
+        ["electricity-price", 0.0],
         ])
     ],
     ["diesel-large", new Map([
-        ["co2", 285]
+        ["co2", 285],
+        ["fuel-consumption", 7.2],
+        ["electricity-consumption", 0.0],
+        ["price", 45000],
+        ["fuel-price", fuelParameter.get("diesel")],
+        ["electricity-price", 0.0],
         ])
     ],
     ["phev-medium", new Map([
-        ["co2", 180]
+        ["co2", 180],
+        ["fuel-consumption", 4.1],
+        ["electricity-consumption", 12.1],
+        ["price", 49000],
+        ["fuel-price", fuelParameter.get("petrol")],
+        ["electricity-price", fuelParameter.get("phev")],
         ])
     ],
     ["phev-large", new Map([
-        ["co2", 270]
+        ["co2", 270],
+        ["fuel-consumption", 4.0],
+        ["electricity-consumption", 14.8],
+        ["price", 64000],
+        ["fuel-price", fuelParameter.get("petrol")],
+        ["electricity-price", fuelParameter.get("phev")],
         ])
     ],
     ["bev-small", new Map([
-       ["co2", 50]
+       ["co2", 50],
+       ["fuel-consumption", 0.0],
+       ["electricity-consumption", 19.9],
+       ["price", 37000],
+       ["fuel-price", 0.0],
+       ["electricity-price", fuelParameter.get("bev")],
        ])
     ],
     ["bev-medium", new Map([
-       ["co2", 50]
+       ["co2", 50],
+       ["fuel-consumption", 0.0],
+       ["electricity-consumption", 20.9],
+       ["price", 33000],
+       ["fuel-price", 0.0],
+       ["electricity-price", fuelParameter.get("bev")],
        ])
     ],
     ["bev-large", new Map([
-       ["co2", 55]
+       ["co2", 55],
+       ["fuel-consumption", 0.0],
+       ["electricity-consumption", 21.9],
+       ["price", 43000],
+       ["fuel-price", 0.0],
+       ["electricity-price", fuelParameter.get("bev")],
        ])
    ]
 ]);
