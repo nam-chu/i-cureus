@@ -24,108 +24,48 @@ const flightParameter = new Map([
     ]
 ]);
 
-const fuelParameter = new Map([
-    ["petrol", 1.53],
-    ["diesel", 1.54],
-    ["phev", 0.21],
-    ["bev", 0.21]
-]);
-
 const carParameter = new Map([
     ["petrol-small", new Map([
-        ["co2", 235],
-        ["fuel-consumption", 6.5],
-        ["electricity-consumption", 0.0],
-        ["price", 17500],
-        ["fuel-price", fuelParameter.get("petrol")],
-        ["electricity-price", 0.0],
+        ["co2", 235]
         ])
     ],
     ["petrol-medium", new Map([
-        ["co2", 245],
-        ["fuel-consumption", 7.1],
-        ["electricity-consumption", 0.0],
-        ["price", 20000],
-        ["fuel-price", fuelParameter.get("petrol")],
-        ["electricity-price", 0.0],
+        ["co2", 245]
         ])
     ],
     ["petrol-large", new Map([
-        ["co2", 270],
-        ["fuel-consumption", 7.9],
-        ["electricity-consumption", 0.0],
-        ["price", 33000],
-        ["fuel-price", fuelParameter.get("petrol")],
-        ["electricity-price", 0.0],
+        ["co2", 270]
         ])
     ],
     ["diesel-medium", new Map([
-        ["co2", 245],
-        ["fuel-consumption", 5.9],
-        ["electricity-consumption", 0.0],
-        ["price", 40000],
-        ["fuel-price", fuelParameter.get("diesel")],
-        ["electricity-price", 0.0],
+        ["co2", 245]
         ])
     ],
     ["diesel-large", new Map([
-        ["co2", 285],
-        ["fuel-consumption", 7.2],
-        ["electricity-consumption", 0.0],
-        ["price", 45000],
-        ["fuel-price", fuelParameter.get("diesel")],
-        ["electricity-price", 0.0],
+        ["co2", 285]
         ])
     ],
     ["phev-medium", new Map([
-        ["co2", 180],
-        ["fuel-consumption", 4.1],
-        ["electricity-consumption", 12.1],
-        ["price", 49000],
-        ["fuel-price", fuelParameter.get("petrol")],
-        ["electricity-price", fuelParameter.get("phev")],
+        ["co2", 180]
         ])
     ],
     ["phev-large", new Map([
-        ["co2", 270],
-        ["fuel-consumption", 4.0],
-        ["electricity-consumption", 14.8],
-        ["price", 64000],
-        ["fuel-price", fuelParameter.get("petrol")],
-        ["electricity-price", fuelParameter.get("phev")],
+        ["co2", 270]
         ])
     ],
     ["bev-small", new Map([
-       ["co2", 50],
-       ["fuel-consumption", 0.0],
-       ["electricity-consumption", 19.9],
-       ["price", 37000],
-       ["fuel-price", 0.0],
-       ["electricity-price", fuelParameter.get("bev")],
+       ["co2", 50]
        ])
     ],
     ["bev-medium", new Map([
-       ["co2", 50],
-       ["fuel-consumption", 0.0],
-       ["electricity-consumption", 20.9],
-       ["price", 33000],
-       ["fuel-price", 0.0],
-       ["electricity-price", fuelParameter.get("bev")],
+       ["co2", 50]
        ])
     ],
     ["bev-large", new Map([
-       ["co2", 55],
-       ["fuel-consumption", 0.0],
-       ["electricity-consumption", 21.9],
-       ["price", 43000],
-       ["fuel-price", 0.0],
-       ["electricity-price", fuelParameter.get("bev")],
+       ["co2", 55]
        ])
    ]
 ]);
-
-
-
 
 function getStartingTotal(surveySettings) {
     var evaluatorSettings = buildEvaluatorSettings(surveySettings);
@@ -174,56 +114,21 @@ function buildEvaluatorSettings(surveySettings) {
             enabled: true,
             visible: surveySettings.hasAccessToCar,
             carKilometrageYearly: surveySettings.carKilometrageYearly,
-            select: 1.0,
-            investment: "",
-            annual: "",
-        },
-
-        compensateKilometrageCarByPtShort: {
-            enabled: true,
-            visible: surveySettings.hasAccessToCar,
-            compensatedKilometrageYearly: 0.0,
-            select: 0.0,
-            investment: "",
-            annual: "",
-        },
-
-        compensateKilometrageCarByPtLong: {
-            enabled: true,
-            visible: surveySettings.hasAccessToCar,
-            compensatedKilometrageYearly: 0.0,
-            select: 0.0,
-            investment: "",
-            annual: "",
+            select: 1.0
         },
         compensateKilometrageCarByNone: {
             enabled: true,
             visible: surveySettings.hasAccessToCar,
             compensatedKilometrageYearly: 0.0,
             select: 0.0,
-            investment: "",
-            annual: "",
         },
-
         replaceCar: {
             selected: false,
             enabled: true,
             visible: surveySettings.ownsCar,
             car: surveySettings.car,
             selectCar: surveySettings.car,
-            investment: "",
-            annual: "",
-        },
-
-        sellCar: {
-            selected: false,
-            enabled: true,
-            visible: surveySettings.ownsCar,
-            carValue: surveySettings.carValue,
-            investment: "",
-            annual: "",
-        },
-
+        }
     };
 
     evaluatorSettings.initialMobility = calculateMobility(evaluatorSettings);
@@ -279,69 +184,12 @@ function calculateMobility(mobilitySettings) {
     flightsValue += numLongFlights * flightParameter.get("long").get("co2");
     mobility += flightsValue;
 
-    if (mobilitySettings.replaceCar.car != "") { // only do all this if there is a access to a car
-        var existingCar = mobilitySettings.replaceCar.car;
+    if (mobilitySettings.reduceKilometrageCar.selected) { 
         var carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
-        var variableCostsExistingCar = carKilometrage * carParameter.get(existingCar).get("fuel-consumption") / 100 * carParameter.get(existingCar).get("fuel-price") +
-            carKilometrage * carParameter.get(existingCar).get("electricity-consumption") / 100 * carParameter.get(existingCar).get("electricity-price");
-        var fixedCostsExistingCar = 2650 + 0.134 * mobilitySettings.sellCar.carValue;
-
-        var actualCar = existingCar;
-        var variableCostsActualCar = variableCostsExistingCar;
-        var fixedCostsActualCar = fixedCostsExistingCar;
-        var actualCarKilometrage = carKilometrage;
-
-        if (!mobilitySettings.sellCar.selected) {
-            mobilitySettings.sellCar.investment = "";
-            mobilitySettings.sellCar.annual = "";
-
-            if (mobilitySettings.replaceCar.selected) {
-                actualCar = mobilitySettings.replaceCar.selectCar;
-                variableCostsActualCar = carKilometrage * carParameter.get(actualCar).get("fuel-consumption") / 100 * carParameter.get(actualCar).get("fuel-price") +
-                        carKilometrage * carParameter.get(actualCar).get("electricity-consumption") / 100 * carParameter.get(actualCar).get("electricity-price");
-                var priceActualCar = carParameter.get(actualCar).get("price");
-                fixedCostsActualCar = 2650 + 0.134 * priceActualCar;
-
-                mobilitySettings.replaceCar.investment = priceActualCar - mobilitySettings.sellCar.carValue;
-                mobilitySettings.replaceCar.annual = (fixedCostsActualCar - fixedCostsExistingCar) + (variableCostsActualCar - variableCostsExistingCar);
-
-                mobilitySettings.sum.investment += mobilitySettings.replaceCar.investment;
-                mobilitySettings.sum.annual += mobilitySettings.replaceCar.annual;
-            } else {
-                mobilitySettings.replaceCar.investment = "";
-                mobilitySettings.replaceCar.annual = "";
-            }
-
-            if (mobilitySettings.reduceKilometrageCar.selected) {
-                actualCarKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly * (1 - mobilitySettings.reduceKilometrageCar.select);
-
-               mobilitySettings.reduceKilometrageCar.investment = 0;
-               mobilitySettings.reduceKilometrageCar.annual = - variableCostsActualCar * (1 - actualCarKilometrage / carKilometrage);
-
-               mobilitySettings.sum.investment += mobilitySettings.reduceKilometrageCar.investment;
-               mobilitySettings.sum.annual += mobilitySettings.reduceKilometrageCar.annual;
-            } else {
-                mobilitySettings.reduceKilometrageCar.investment = "";
-                mobilitySettings.reduceKilometrageCar.annual = "";
-            }
-
-            var carCo2 = carParameter.get(actualCar).get("co2");
-            var carValue = carCo2 *actualCarKilometrage / 1_000_000;
-            mobility += carValue;
-        } else { // i.e. we sell the car
-            mobilitySettings.sellCar.investment = - mobilitySettings.sellCar.carValue;
-            mobilitySettings.sellCar.annual = - fixedCostsActualCar - variableCostsExistingCar;
-
-            mobilitySettings.sum.investment += mobilitySettings.sellCar.investment;
-            mobilitySettings.sum.annual += mobilitySettings.sellCar.annual;
-
-            // if we sell the car, we automatically reduce the kilometrage by 100% - all savings are taken into account in the ""sell car"" option
-            mobilitySettings.reduceKilometrageCar.investment = "";
-            mobilitySettings.reduceKilometrageCar.annual = "";
-            mobilitySettings.replaceCar.investment = "";
-            mobilitySettings.replaceCar.annual = "";
+        var carCo2 = carParameter.get(actualCar).get("co2");
+        var carValue = carCo2 *carKilometrage / 1000000;
+        mobility += carValue;
         }
-    }
     return mobility;
 }
 
