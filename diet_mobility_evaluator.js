@@ -195,13 +195,67 @@ function calculateMobility(mobilitySettings) {
     flightsValue += numLongFlights * flightParameter.get("long").get("co2");
     mobility += flightsValue;
 
-    if (mobilitySettings.replaceCar.car != ""){
+    if (mobilitySettings.replaceCar.car != "") { // only do all this if there is a access to a car
+        var existingCar = mobilitySettings.replaceCar.car;
         var carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
+        var variableCostsExistingCar = carKilometrage * carParameter.get(existingCar).get("fuel-consumption") / 100 * carParameter.get(existingCar).get("fuel-price") +
+            carKilometrage * carParameter.get(existingCar).get("electricity-consumption") / 100 * carParameter.get(existingCar).get("electricity-price");
+        var fixedCostsExistingCar = 2650 + 0.134 * mobilitySettings.sellCar.carValue;
+
+        var actualCar = existingCar;
+        var variableCostsActualCar = variableCostsExistingCar;
+        var fixedCostsActualCar = fixedCostsExistingCar;
         var actualCarKilometrage = carKilometrage;
+
         if (!mobilitySettings.sellCar.selected) {
+            mobilitySettings.sellCar.investment = "";
+            mobilitySettings.sellCar.annual = "";
+
+            if (mobilitySettings.replaceCar.selected) {
+                actualCar = mobilitySettings.replaceCar.selectCar;
+                variableCostsActualCar = carKilometrage * carParameter.get(actualCar).get("fuel-consumption") / 100 * carParameter.get(actualCar).get("fuel-price") +
+                        carKilometrage * carParameter.get(actualCar).get("electricity-consumption") / 100 * carParameter.get(actualCar).get("electricity-price");
+                var priceActualCar = carParameter.get(actualCar).get("price");
+                fixedCostsActualCar = 2650 + 0.134 * priceActualCar;
+
+                mobilitySettings.replaceCar.investment = priceActualCar - mobilitySettings.sellCar.carValue;
+                mobilitySettings.replaceCar.annual = (fixedCostsActualCar - fixedCostsExistingCar) + (variableCostsActualCar - variableCostsExistingCar);
+
+                mobilitySettings.sum.investment += mobilitySettings.replaceCar.investment;
+                mobilitySettings.sum.annual += mobilitySettings.replaceCar.annual;
+            } else {
+                mobilitySettings.replaceCar.investment = "";
+                mobilitySettings.replaceCar.annual = "";
+            }
+
+            if (mobilitySettings.reduceKilometrageCar.selected) {
+                actualCarKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly * (1 - mobilitySettings.reduceKilometrageCar.select);
+
+               mobilitySettings.reduceKilometrageCar.investment = 0;
+               mobilitySettings.reduceKilometrageCar.annual = - variableCostsActualCar * (1 - actualCarKilometrage / carKilometrage);
+
+               mobilitySettings.sum.investment += mobilitySettings.reduceKilometrageCar.investment;
+               mobilitySettings.sum.annual += mobilitySettings.reduceKilometrageCar.annual;
+            } else {
+                mobilitySettings.reduceKilometrageCar.investment = "";
+                mobilitySettings.reduceKilometrageCar.annual = "";
+            }
+
             var carCo2 = carParameter.get(actualCar).get("co2");
             var carValue = carCo2 *actualCarKilometrage / 1_000_000;
             mobility += carValue;
+        } else { // i.e. we sell the car
+            mobilitySettings.sellCar.investment = - mobilitySettings.sellCar.carValue;
+            mobilitySettings.sellCar.annual = - fixedCostsActualCar - variableCostsExistingCar;
+
+            mobilitySettings.sum.investment += mobilitySettings.sellCar.investment;
+            mobilitySettings.sum.annual += mobilitySettings.sellCar.annual;
+
+            // if we sell the car, we automatically reduce the kilometrage by 100% - all savings are taken into account in the ""sell car"" option
+            mobilitySettings.reduceKilometrageCar.investment = "";
+            mobilitySettings.reduceKilometrageCar.annual = "";
+            mobilitySettings.replaceCar.investment = "";
+            mobilitySettings.replaceCar.annual = "";
         }
     }
     return mobility;
