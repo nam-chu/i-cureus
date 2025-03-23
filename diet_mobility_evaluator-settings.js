@@ -41,16 +41,8 @@ function getCar(valFuel, valSize) {
     getFuelType(valFuel) + "-" + getCarSize(valSize);
     if(fuelType == '' && carSize == '') {
         return "";
-    } else {
-        // recode some values that do not exist in CH
-        if (fuelType == "diesel" && carSize == "small") {
-            carSize = "medium";
-        }
-        if (fuelType == "phev" && carSize == "small") {
-            carSize = "medium";
-        }
-        return fuelType + "-" + carSize;
-    }
+    } 
+    return fuelType + "-" + carSize;
 }
 
 function extractSelectedChoices(answer, forceReturnArray = false) {
@@ -91,7 +83,8 @@ function formatSurveySettings(data) {
         hasAccessToCar: getCarAccess(data.q6),
         ownsCar: getOwnsCar(data.q7),
         carKilometrageYearly: parseIntOrZero(data.q10),
-        car: getCar(data.q8, data.q9), // petrol-small, petrol-medium, petrol-large, diesel-medium, diesel-large, phev-medium, phev-large, bev-small, bev-medium, bev-large
+        car: getCar(data.q8, data.q9),
+        carValue: parseIntOrZero(data.q11),
     };
 
     return surveySettings;
