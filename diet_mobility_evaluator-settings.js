@@ -83,8 +83,7 @@ function formatSurveySettings(data) {
         hasAccessToCar: getCarAccess(data.q6),
         ownsCar: getOwnsCar(data.q7),
         carKilometrageYearly: parseIntOrZero(data.q10),
-        car: getCar(data.q8, data.q9),
-        carValue: parseIntOrZero(data.q11),
+        car: getCar(data.q8, data.q9)
     };
 
     return surveySettings;
