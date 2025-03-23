@@ -82,8 +82,6 @@ function buildEvaluatorSettings(surveySettings) {
 
         diet: {
             selected: false,
-            enabled: true,
-            visible: true,
             diet: surveySettings.diet,
             selectDiet: surveySettings.diet
         },
@@ -162,34 +160,36 @@ function calculateDiet(dietSettings) {
 }
 
 function calculateMobility(mobilitySettings) {
-    var mobility = 0;
+    let mobility = 0;
+    let flightsValue = 0;
 
-    flightsValue = 0;
-    numShortFlights = mobilitySettings.shortFlights.numShortFlights;
-    numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
-    numLongFlights = mobilitySettings.longFlights.numLongFlights;
-    
+    let numShortFlights = mobilitySettings.shortFlights.numShortFlights;
+    let numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
+    let numLongFlights = mobilitySettings.longFlights.numLongFlights;
+
     if (mobilitySettings.shortFlights.selected) {
-        numShortFlights -= mobilitySettings.shortFlights.select;  
-    } 
-    numShortFlights = mobilitySettings.shortFlights.numShortFlights;
+        numShortFlights -= mobilitySettings.shortFlights.select;
+    }
     if (mobilitySettings.mediumFlights.selected) {
         numMediumFlights -= mobilitySettings.mediumFlights.select;
     }
     if (mobilitySettings.longFlights.selected) {
         numLongFlights -= mobilitySettings.longFlights.select;
     }
+
     flightsValue += numShortFlights * flightParameter.get("short").get("co2");
     flightsValue += numMediumFlights * flightParameter.get("medium").get("co2");
     flightsValue += numLongFlights * flightParameter.get("long").get("co2");
     mobility += flightsValue;
 
-    if (mobilitySettings.reduceKilometrageCar.selected) { 
-        var carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
-        var carCo2 = carParameter.get(actualCar).get("co2");
-        var carValue = carCo2 *carKilometrage / 1000000;
+    if (mobilitySettings.reduceKilometrageCar?.selected && mobilitySettings.actualCar) {
+        const carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
+        const carCo2 = carParameter.get(mobilitySettings.actualCar).get("co2");
+        const carValue = carCo2 * carKilometrage / 1_000_000;
         mobility += carValue;
-        }
+    }
+
     return mobility;
 }
+
 
