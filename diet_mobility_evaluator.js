@@ -182,13 +182,14 @@ function calculateMobility(mobilitySettings) {
     flightsValue += numLongFlights * flightParameter.get("long").get("co2");
     mobility += flightsValue;
 
-    if (mobilitySettings.reduceKilometrageCar?.selected && mobilitySettings.actualCar) {
-        const carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
-        const carCo2 = carParameter.get(mobilitySettings.actualCar).get("co2");
-        const carValue = carCo2 * carKilometrage;
-        mobility += carValue;
+    if (mobilitySettings.replaceCar && mobilitySettings.replaceCar.car != "") {
+        let carInfo = carParameter.get(mobilitySettings.replaceCar.car);
+        let carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
+        let carCo2 = carInfo.get("co2");
+        // Assume carCo2 is in grams per km; convert to tons per year:
+        let carEmissions = carCo2 * carKilometrage / 1_000_000;
+        mobility += carEmissions;
     }
-
     return mobility;
 }
 
