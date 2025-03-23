@@ -185,7 +185,7 @@ function calculateMobility(mobilitySettings) {
     if (mobilitySettings.reduceKilometrageCar?.selected && mobilitySettings.actualCar) {
         const carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
         const carCo2 = carParameter.get(mobilitySettings.actualCar).get("co2");
-        const carValue = carCo2 * carKilometrage / 1_000_000;
+        const carValue = carCo2 * carKilometrage;
         mobility += carValue;
     }
 
