@@ -87,14 +87,13 @@ function buildEvaluatorSettings(surveySettings) {
         },
         shortFlights: {
             selected: false,
-            enabled: true,
             visible: surveySettings.numShortFlights > 0,
             numShortFlights: surveySettings.numShortFlights,
             select: 1
         },
         mediumFlights: {
             selected: false,
-            enabled: true,
+            // enabled: true,
             visible: surveySettings.numMediumFlights > 0,
             numMediumFlights: surveySettings.numMediumFlights,
             select: 1,
@@ -102,31 +101,32 @@ function buildEvaluatorSettings(surveySettings) {
 
         longFlights: {
             selected: false,
-            enabled: true,
+            // enabled: true,
             visible: surveySettings.numLongFlights > 0,
             numLongFlights: surveySettings.numLongFlights,
             select: 1
         },
         reduceKilometrageCar: {
             selected: false,
-            enabled: true,
+            // enabled: true,
             visible: surveySettings.hasAccessToCar,
             carKilometrageYearly: surveySettings.carKilometrageYearly,
             select: 1.0
         },
         compensateKilometrageCarByNone: {
-            enabled: true,
+            // enabled: true,
             visible: surveySettings.hasAccessToCar,
             compensatedKilometrageYearly: 0.0,
             select: 0.0,
         },
         replaceCar: {
             selected: false,
-            enabled: true,
+            // enabled: true,
             visible: surveySettings.ownsCar,
             car: surveySettings.car,
             selectCar: surveySettings.car,
-        }
+        },
+        actualCar: surveySettings.car 
     };
 
     evaluatorSettings.initialMobility = calculateMobility(evaluatorSettings);
