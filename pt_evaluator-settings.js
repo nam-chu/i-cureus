@@ -47,7 +47,7 @@ function getCar(valFuel, valSize) {
 
 function getPtKm(valUsesPt, valPtKm) {
     let useChoice = extractSelectedChoices(valUsesPt);
-    return (useChoice != 0) ? parseInt(valPtKm) : 0; 
+    return (useChoice != 0) ? parseIntOrZero(valPtKm) : 0; 
 }
 
 function extractSelectedChoices(answer, forceReturnArray = false) {
@@ -89,7 +89,7 @@ function formatSurveySettings(data) {
         ownsCar: getOwnsCar(data.q7),
         carKilometrageYearly: parseIntOrZero(data.q10),
         car: getCar(data.q8, data.q9),
-        trainKilometrageWeekly: getPtKm(data.q6, data.q7),
+        trainKilometrageWeekly: getPtKm(data.q11, data.q12),
         tramKilometrageWeekly: 0,
         busKilometrageWeekly: 0,
     };
