@@ -46,9 +46,13 @@ function getCar(valFuel, valSize) {
 }
 
 function getPtKm(valUsesPt, valPtKm) {
+    console.log("getPtKm inputs:", valUsesPt, valPtKm);
     let useChoice = extractSelectedChoices(valUsesPt);
-    return (useChoice != 0) ? parseIntOrZero(valPtKm) : 0; 
+    let result = (useChoice != 0) ? parseIntOrZero(valPtKm) : 0; 
+    console.log("getPtKm output:", result);
+    return result;
 }
+
 
 function extractSelectedChoices(answer, forceReturnArray = false) {
     let NO_ANSWER = 0;
@@ -74,7 +78,9 @@ function extractSelectedChoices(answer, forceReturnArray = false) {
 }
 
 function parseIntOrZero(answer) {
-    let parsed = parseInt(answer);
+    // Trim the answer to remove extra whitespace
+    let trimmed = answer ? answer.trim() : "";
+    let parsed = parseInt(trimmed);
     return isNaN(parsed) ? 0 : parsed;
 }
 
