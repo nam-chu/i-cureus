@@ -90,7 +90,7 @@ const heatingEfficiency = new Map([
     ["heat-pump", 3.00],
     ["wood", 0.85],
     ["district-heating", 1.0],
-    ["unknown", 1.00]
+    ["unknown", 0.80] // this should be the same as oil
 ]);
 
 const houseStandardParameter = new Map([
@@ -258,7 +258,7 @@ function calculateMobility(mobilitySettings) {
 }
 function calculateHouse(houseSettings) {
     var houseStandard = houseStandardParameter.get(houseSettings.houseStandard);
-    var heatingType = heatingTypeParameter.get(houseSettings.heatingType);
+    var heatingType = heatingTypeParameter.get(houseSettings.heatingType)/10;
     var energyUse = houseSettings.houseSize * houseStandard * heatingType/ heatingEfficiency.get(houseSettings.heatingType)/1000;
 
     return energyUse;
