@@ -189,7 +189,7 @@ function calculateActualValues(settings) {
     var actualMobility = calculateMobility(settings);
     var actualFlight = calculateFlight(settings);
     var actualHouse = calculateHouse(settings);
-    var actualTotal = actualDiet + actualMobility + actualHouse;
+    var actualTotal = actualDiet + actualMobility + actualFlight+ actualHouse;
     var actual = {
         actualDiet,
         actualMobility,
@@ -249,18 +249,18 @@ function calculateHouse(houseSettings) {
 function calculateFlight(flightSettings) {
     let flightsValue = 0;
 
-    let numShortFlights = mobilitySettings.shortFlights.numShortFlights;
-    let numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
-    let numLongFlights = mobilitySettings.longFlights.numLongFlights;
+    let numShortFlights = flightSettings.shortFlights.numShortFlights;
+    let numMediumFlights = flightSettings.mediumFlights.numMediumFlights;
+    let numLongFlights = flightSettings.longFlights.numLongFlights;
 
-    if (mobilitySettings.shortFlights.selected) {
-        numShortFlights -= mobilitySettings.shortFlights.select;
+    if (flightSettings.shortFlights.selected) {
+        numShortFlights -= flightSettings.shortFlights.select;
     }
-    if (mobilitySettings.mediumFlights.selected) {
-        numMediumFlights -= mobilitySettings.mediumFlights.select;
+    if (flightSettings.mediumFlights.selected) {
+        numMediumFlights -= flightSettings.mediumFlights.select;
     }
-    if (mobilitySettings.longFlights.selected) {
-        numLongFlights -= mobilitySettings.longFlights.select;
+    if (flightSettings.longFlights.selected) {
+        numLongFlights -= flightSettings.longFlights.select;
     }
 
     flightsValue += numShortFlights * flightParameter.get("short").get("co2");
