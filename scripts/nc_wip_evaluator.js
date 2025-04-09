@@ -175,6 +175,7 @@ function buildEvaluatorSettings(surveySettings) {
         householdMembers: surveySettings.householdMembers,
     };
 
+    evaluatorSettings.initialFlight = calculateFlight(evaluatorSettings);
     evaluatorSettings.initialMobility = calculateMobility(evaluatorSettings);
     evaluatorSettings.initialDiet = calculateDiet(evaluatorSettings);
     evaluatorSettings.initialHouse = calculateHouse(evaluatorSettings);
