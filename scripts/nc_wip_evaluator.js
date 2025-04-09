@@ -1,4 +1,3 @@
-
 // Start by declaring relevant data structures
 
 // Diet
@@ -187,11 +186,13 @@ function calculateActualValues(settings) {
 
     var actualDiet = calculateDiet(settings);
     var actualMobility = calculateMobility(settings);
+    var actualFlight = calculateFlight(settings);
     var actualHouse = calculateHouse(settings);
     var actualTotal = actualDiet + actualMobility + actualHouse;
     var actual = {
         actualDiet,
         actualMobility,
+        actualFlight,
         actualHouse,
         actualTotal    
     };
@@ -212,27 +213,7 @@ function calculateDiet(dietSettings) {
 
 function calculateMobility(mobilitySettings) {
     let mobility = 0;
-    let flightsValue = 0;
-
-    let numShortFlights = mobilitySettings.shortFlights.numShortFlights;
-    let numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
-    let numLongFlights = mobilitySettings.longFlights.numLongFlights;
-
-    if (mobilitySettings.shortFlights.selected) {
-        numShortFlights -= mobilitySettings.shortFlights.select;
-    }
-    if (mobilitySettings.mediumFlights.selected) {
-        numMediumFlights -= mobilitySettings.mediumFlights.select;
-    }
-    if (mobilitySettings.longFlights.selected) {
-        numLongFlights -= mobilitySettings.longFlights.select;
-    }
-
-    flightsValue += numShortFlights * flightParameter.get("short").get("co2");
-    flightsValue += numMediumFlights * flightParameter.get("medium").get("co2");
-    flightsValue += numLongFlights * flightParameter.get("long").get("co2");
-    mobility += flightsValue;
-
+    
     if (mobilitySettings.replaceCar && mobilitySettings.replaceCar.car != "") {
         let carInfo = carParameter.get(mobilitySettings.replaceCar.car);
         let carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
@@ -264,4 +245,27 @@ function calculateHouse(houseSettings) {
     return energyUse;
 }
 
+function calculateFlight(flightSettings) {
+    let flightsValue = 0;
 
+    let numShortFlights = mobilitySettings.shortFlights.numShortFlights;
+    let numMediumFlights = mobilitySettings.mediumFlights.numMediumFlights;
+    let numLongFlights = mobilitySettings.longFlights.numLongFlights;
+
+    if (mobilitySettings.shortFlights.selected) {
+        numShortFlights -= mobilitySettings.shortFlights.select;
+    }
+    if (mobilitySettings.mediumFlights.selected) {
+        numMediumFlights -= mobilitySettings.mediumFlights.select;
+    }
+    if (mobilitySettings.longFlights.selected) {
+        numLongFlights -= mobilitySettings.longFlights.select;
+    }
+
+    flightsValue += numShortFlights * flightParameter.get("short").get("co2");
+    flightsValue += numMediumFlights * flightParameter.get("medium").get("co2");
+    flightsValue += numLongFlights * flightParameter.get("long").get("co2");
+    
+    return flightsValue;
+ 
+}
