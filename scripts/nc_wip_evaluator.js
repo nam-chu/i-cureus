@@ -48,7 +48,7 @@ const heatingEfficiency = new Map([
     ["heat-pump", 3.00],
     ["wood", 0.85],
     ["district-heating", 1.0],
-    ["unknown", 0.80] // this should be the same as oil
+    ["unknown", 0.80] 
 ]);
 
 const houseStandardParameter = new Map([
@@ -110,7 +110,7 @@ function calculateActualValues(settings) {
     var actualMobility = calculateMobility(settings);
     var actualFlight = calculateFlight(settings);
     var actualHouse = calculateHouse(settings);
-    var actualTotal = actualDiet + actualMobility + actualFlight+ actualHouse;
+    var actualTotal = actualDiet + actualMobility + actualFlight + actualHouse;
     var actual = {
         actualDiet,
         actualMobility,
@@ -123,23 +123,19 @@ function calculateActualValues(settings) {
 
 function calculateDiet(dietSettings) {
         return dietParameter.get(dietSettings.diet);
-    }
+}
 
 function calculateMobility(mobilitySettings) {
-    let mobility = 0;
     
+    let mobility = 0;    
     if (mobilitySettings.replaceCar && mobilitySettings.replaceCar.car != "") {
         let carInfo = carParameter.get(mobilitySettings.replaceCar.car);
         let carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
-        // let carCo2 = carInfo.get("co2");
-        // Assume carCo2 is in grams per km; convert to tons per year:
         let carEmissions = carInfo * carKilometrage / 1_000_000;
         mobility += carEmissions;
     }
 
     let ptValue = 0;
-
-// Ensure the weekly kilometrage values default to 0 if they are empty or undefined.
     let trainKm = parseFloat(mobilitySettings.trainKilometrageWeekly) || 0;
     let tramKm  = parseFloat(mobilitySettings.tramKilometrageWeekly) || 0;
     let busKm   = parseFloat(mobilitySettings.busKilometrageWeekly) || 0;
@@ -151,7 +147,9 @@ function calculateMobility(mobilitySettings) {
 
     return mobility;
 }
+
 function calculateHouse(houseSettings) {
+    
     var houseStandard = houseStandardParameter.get(houseSettings.houseStandard);
     var heatingType = heatingTypeParameter.get(houseSettings.heatingType)/10;
     var energyUse = houseSettings.houseSize * houseStandard * heatingType/ heatingEfficiency.get(houseSettings.heatingType)/1000;
