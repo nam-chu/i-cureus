@@ -13,46 +13,16 @@ const flightParameter = new Map([
 ]);
 
 const carParameter = new Map([
-    ["petrol-small", new Map([
-        ["co2", 235]
-        ])
-    ],
-    ["petrol-medium", new Map([
-        ["co2", 245]
-        ])
-    ],
-    ["petrol-large", new Map([
-        ["co2", 270]
-        ])
-    ],
-    ["diesel-medium", new Map([
-        ["co2", 245]
-        ])
-    ],
-    ["diesel-large", new Map([
-        ["co2", 285]
-        ])
-    ],
-    ["phev-medium", new Map([
-        ["co2", 180]
-        ])
-    ],
-    ["phev-large", new Map([
-        ["co2", 270]
-        ])
-    ],
-    ["bev-small", new Map([
-       ["co2", 50]
-       ])
-    ],
-    ["bev-medium", new Map([
-       ["co2", 50]
-       ])
-    ],
-    ["bev-large", new Map([
-       ["co2", 55]
-       ])
-   ]
+    ["petrol-small", 235],
+    ["petrol-medium", 245],
+    ["petrol-large", 270],
+    ["diesel-medium", 245],
+    ["diesel-large", 285],
+    ["phev-medium", 180],
+    ["phev-large", 270],
+    ["bev-small", 50],
+    ["bev-medium", 50],
+    ["bev-large", 55]
 ]);
 
 const ptParameter = new Map([
@@ -207,9 +177,9 @@ function calculateMobility(mobilitySettings) {
     if (mobilitySettings.replaceCar && mobilitySettings.replaceCar.car != "") {
         let carInfo = carParameter.get(mobilitySettings.replaceCar.car);
         let carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
-        let carCo2 = carInfo.get("co2");
+        // let carCo2 = carInfo.get("co2");
         // Assume carCo2 is in grams per km; convert to tons per year:
-        let carEmissions = carCo2 * carKilometrage / 1_000_000;
+        let carEmissions = carInfo * carKilometrage / 1_000_000;
         mobility += carEmissions;
     }
 
