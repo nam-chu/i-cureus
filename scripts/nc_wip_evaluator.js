@@ -65,60 +65,30 @@ function getStartingTotal(surveySettings) {
 
 function buildEvaluatorSettings(surveySettings) {
      evaluatorSettings = {
-        // global settings
-        // enableDebug: surveySettings.enableDebug,
-        // language: surveySettings.language,
-        //locale: surveySettings.locale,
-        // hiddenTextSelector: surveySettings.hiddenTextSelector,
-        
-        diet: {
-            // selected: false,
-            diet: surveySettings.diet,
-            selectDiet: surveySettings.diet
-        },
+         
+        diet: surveySettings.diet,
         shortFlights: {
-            // selected: false,
-            // visible: surveySettings.numShortFlights > 0,
-            numShortFlights: surveySettings.numShortFlights,
-            // select: 1
+            numShortFlights: surveySettings.numShortFlights
         },
         mediumFlights: {
-            // selected: false,
-            // enabled: true,
-            // visible: surveySettings.numMediumFlights > 0,
             numMediumFlights: surveySettings.numMediumFlights,
-            // select: 1,
         },
-
         longFlights: {
-            // selected: false,
-            // enabled: true,
-            // select: 1
-            //visible: surveySettings.numLongFlights > 0,
             numLongFlights: surveySettings.numLongFlights,
         },
         reduceKilometrageCar: {
-            // selected: false,
-            // enabled: true,
-            // visible: surveySettings.hasAccessToCar,
-            //select: 1.0
             carKilometrageYearly: surveySettings.carKilometrageYearly,
         },
         replaceCar: {
-            ///selected: false,
-            // enabled: true,
-           // visible: surveySettings.ownsCar,
             car: surveySettings.car,
             selectCar: surveySettings.car,
         },
         actualCar: surveySettings.car,
 
-        // personal transportation
         trainKilometrageWeekly: surveySettings.trainKilometrageWeekly,
         tramKilometrageWeekly: surveySettings.tramKilometrageWeekly,
         busKilometrageWeekly: surveySettings.busKilometrageWeekly,
         
-        // home heating 
         houseType: surveySettings.houseType,
         houseStandard: surveySettings.houseStandard,
         houseSize: surveySettings.houseSize,
@@ -152,16 +122,8 @@ function calculateActualValues(settings) {
 }
 
 function calculateDiet(dietSettings) {
-    if (dietSettings.diet.selected) {
-        var value = dietParameter.get(dietSettings.diet.selectDiet);
-        if (value == null) {
-            console.log("Unknown diet option selected: " + dietSettings.diet);
-            return 0;
-        } else return value;
-    } else {
-        return dietParameter.get(dietSettings.diet.diet);
+        return dietParameter.get(dietSettings.diet);
     }
-}
 
 function calculateMobility(mobilitySettings) {
     let mobility = 0;
