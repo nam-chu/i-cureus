@@ -59,7 +59,8 @@ const houseStandardParameter = new Map([
 ]);
 
 function getStartingTotal(surveySettings) {
-    return calculateActualValues(surveySettings);
+    var evaluatorSettings = buildEvaluatorSettings(surveySettings);
+    return calculateActualValues(evaluatorSettings);
 }
 
 function buildEvaluatorSettings(surveySettings) {
