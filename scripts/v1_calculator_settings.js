@@ -101,7 +101,6 @@ function parseIntOrZero(answer) {
 }
 
 function formatSurveySettings(data) {
-
     var surveySettings = {
         hasAccessToCar: getCarAccess(data.q1),
         ownsCar: getOwnsCar(data.q2),
