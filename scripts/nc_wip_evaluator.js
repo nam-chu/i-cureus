@@ -66,54 +66,48 @@ function getStartingTotal(surveySettings) {
 function buildEvaluatorSettings(surveySettings) {
      evaluatorSettings = {
         // global settings
-        enableDebug: surveySettings.enableDebug,
-        language: surveySettings.language,
-        locale: surveySettings.locale,
-        hiddenTextSelector: surveySettings.hiddenTextSelector,
+        // enableDebug: surveySettings.enableDebug,
+        // language: surveySettings.language,
+        //locale: surveySettings.locale,
+        // hiddenTextSelector: surveySettings.hiddenTextSelector,
         
         diet: {
-            selected: false,
+            // selected: false,
             diet: surveySettings.diet,
             selectDiet: surveySettings.diet
         },
         shortFlights: {
-            selected: false,
-            visible: surveySettings.numShortFlights > 0,
+            // selected: false,
+            // visible: surveySettings.numShortFlights > 0,
             numShortFlights: surveySettings.numShortFlights,
-            select: 1
+            // select: 1
         },
         mediumFlights: {
-            selected: false,
+            // selected: false,
             // enabled: true,
-            visible: surveySettings.numMediumFlights > 0,
+            // visible: surveySettings.numMediumFlights > 0,
             numMediumFlights: surveySettings.numMediumFlights,
-            select: 1,
+            // select: 1,
         },
 
         longFlights: {
-            selected: false,
+            // selected: false,
             // enabled: true,
-            visible: surveySettings.numLongFlights > 0,
+            // select: 1
+            //visible: surveySettings.numLongFlights > 0,
             numLongFlights: surveySettings.numLongFlights,
-            select: 1
         },
         reduceKilometrageCar: {
-            selected: false,
+            // selected: false,
             // enabled: true,
-            visible: surveySettings.hasAccessToCar,
+            // visible: surveySettings.hasAccessToCar,
+            //select: 1.0
             carKilometrageYearly: surveySettings.carKilometrageYearly,
-            select: 1.0
-        },
-        compensateKilometrageCarByNone: {
-            // enabled: true,
-            visible: surveySettings.hasAccessToCar,
-            compensatedKilometrageYearly: 0.0,
-            select: 0.0,
         },
         replaceCar: {
-            selected: false,
+            ///selected: false,
             // enabled: true,
-            visible: surveySettings.ownsCar,
+           // visible: surveySettings.ownsCar,
             car: surveySettings.car,
             selectCar: surveySettings.car,
         },
@@ -129,8 +123,6 @@ function buildEvaluatorSettings(surveySettings) {
         houseStandard: surveySettings.houseStandard,
         houseSize: surveySettings.houseSize,
         heatingType: surveySettings.heatingType,
-
-        // number of housemembers, probably not necessary
         householdMembers: surveySettings.householdMembers,
     };
 
