@@ -1,4 +1,6 @@
+// Start by declaring relevant data structures
 
+// Diet
 const dietParameter = new Map([
     ["omnivore", 1.837],
     ["flexitarian", 1.495],
@@ -9,21 +11,50 @@ const dietParameter = new Map([
 const flightParameter = new Map([
     ["short", 0.5],
     ["medium", 2],
-    ["long", 7]
-    ]);
+    ["long", 7]]);
 
 const carParameter = new Map([
-    ["petrol-small", 235],
-    ["petrol-medium", 245],
-    ["petrol-large", 270],
-    ["diesel-medium", 245],
-    ["diesel-large", 285],
-    ["phev-medium", 180],
-    ["phev-large", 270],
-    ["bev-small", 50],
-    ["bev-medium",50]
-    ["bev-large",55]
-    ]);
+    ["petrol-small", new Map([
+        ["co2", 235]
+        ])
+    ],
+    ["petrol-medium", new Map([
+        ["co2", 245]
+        ])
+    ],
+    ["petrol-large", new Map([
+        ["co2", 270]
+        ])
+    ],
+    ["diesel-medium", new Map([
+        ["co2", 245]
+        ])
+    ],
+    ["diesel-large", new Map([
+        ["co2", 285]
+        ])
+    ],
+    ["phev-medium", new Map([
+        ["co2", 180]
+        ])
+    ],
+    ["phev-large", new Map([
+        ["co2", 270]
+        ])
+    ],
+    ["bev-small", new Map([
+       ["co2", 50]
+       ])
+    ],
+    ["bev-medium", new Map([
+       ["co2", 50]
+       ])
+    ],
+    ["bev-large", new Map([
+       ["co2", 55]
+       ])
+   ]
+]);
 
 const ptParameter = new Map([
     ["train", 0.08 ],
@@ -48,7 +79,7 @@ const heatingEfficiency = new Map([
     ["heat-pump", 3.00],
     ["wood", 0.85],
     ["district-heating", 1.0],
-    ["unknown", 0.80] 
+    ["unknown", 0.80] // this should be the same as oil
 ]);
 
 const houseStandardParameter = new Map([
@@ -65,6 +96,12 @@ function getStartingTotal(surveySettings) {
 
 function buildEvaluatorSettings(surveySettings) {
      evaluatorSettings = {
+        // global settings
+        enableDebug: surveySettings.enableDebug,
+        language: surveySettings.language,
+        locale: surveySettings.locale,
+        hiddenTextSelector: surveySettings.hiddenTextSelector,
+        
         diet: {
             selected: false,
             diet: surveySettings.diet,
@@ -136,6 +173,23 @@ function buildEvaluatorSettings(surveySettings) {
     return evaluatorSettings;
 }
 
+function calculateActualValues(settings) {
+
+    var actualDiet = calculateDiet(settings);
+    var actualMobility = calculateMobility(settings);
+    var actualFlight = calculateFlight(settings);
+    var actualHouse = calculateHouse(settings);
+    var actualTotal = actualDiet + actualMobility + actualFlight+ actualHouse;
+    var actual = {
+        actualDiet,
+        actualMobility,
+        actualFlight,
+        actualHouse,
+        actualTotal    
+    };
+    return actual;
+}
+
 function calculateDiet(dietSettings) {
     if (dietSettings.diet.selected) {
         var value = dietParameter.get(dietSettings.diet.selectDiet);
@@ -152,8 +206,10 @@ function calculateMobility(mobilitySettings) {
     let mobility = 0;
     
     if (mobilitySettings.replaceCar && mobilitySettings.replaceCar.car != "") {
-        let carCo2 = carParameter.get(mobilitySettings.replaceCar.car);
+        let carInfo = carParameter.get(mobilitySettings.replaceCar.car);
         let carKilometrage = mobilitySettings.reduceKilometrageCar.carKilometrageYearly;
+        let carCo2 = carInfo.get("co2");
+        // Assume carCo2 is in grams per km; convert to tons per year:
         let carEmissions = carCo2 * carKilometrage / 1_000_000;
         mobility += carEmissions;
     }
