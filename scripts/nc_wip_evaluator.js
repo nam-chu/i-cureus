@@ -1,6 +1,4 @@
-// Start by declaring relevant data structures
 
-// Diet
 const dietParameter = new Map([
     ["omnivore", 1.837],
     ["flexitarian", 1.495],
@@ -9,18 +7,9 @@ const dietParameter = new Map([
 ]);
 
 const flightParameter = new Map([
-    ["short", new Map([
-        ["co2", 0.5]
-        ])
-    ],
-    ["medium", new Map([
-        ["co2", 2]
-        ])
-    ],
-    ["long", new Map([
-        ["co2", 7]
-        ])
-    ]
+    ["short", 0.5],
+    ["medium", 2],
+    ["long", 7]
 ]);
 
 const carParameter = new Map([
@@ -263,9 +252,9 @@ function calculateFlight(flightSettings) {
         numLongFlights -= flightSettings.longFlights.select;
     }
 
-    flightsValue += numShortFlights * flightParameter.get("short").get("co2");
-    flightsValue += numMediumFlights * flightParameter.get("medium").get("co2");
-    flightsValue += numLongFlights * flightParameter.get("long").get("co2");
+    flightsValue += numShortFlights * flightParameter.get("short");
+    flightsValue += numMediumFlights * flightParameter.get("medium");
+    flightsValue += numLongFlights * flightParameter.get("long");
     
     return flightsValue;
  
