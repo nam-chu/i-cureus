@@ -71,27 +71,28 @@ function getHeatingType(val) {
 }
 
 function extractSelectedChoices(answer, forceReturnArray = false) {
+    // If answer is null, undefined, or an empty string, return 0 (or [0] if an array is forced).
+    if (!answer || answer === "") {
+         return forceReturnArray ? [0] : 0;
+    }
     let NO_ANSWER = 0;
     var indices = [];
-    if (answer == "") {
+    if (answer === "") {
         indices.push(NO_ANSWER);
     } else {
         while(answer.includes(",")) {
-            // read number
             indices.push(parseInt(answer.charAt(0)));
-            // delete the read number and ", "
             answer = answer.substring(3);
         }
-        // last one
         indices.push(parseInt(answer.charAt(0)));
     }
-
-    if (indices.length == 1 && !forceReturnArray) {
+    if (indices.length === 1 && !forceReturnArray) {
         return indices[0];
     } else {
         return indices;
     }
 }
+
 
 function parseIntOrZero(answer) {
     // Trim the answer to remove extra whitespace
