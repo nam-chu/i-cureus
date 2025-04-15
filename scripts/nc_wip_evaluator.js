@@ -152,7 +152,7 @@ function calculateHouse(houseSettings) {
     
     var houseStandard = houseStandardParameter.get(houseSettings.houseStandard);
     var heatingType = heatingTypeParameter.get(houseSettings.heatingType)/10;
-    var energyUse = houseSettings.houseSize * houseStandard * heatingType/ heatingEfficiency.get(houseSettings.heatingType)/1000;
+    var energyUse = (houseSettings.houseSize / 10.76)* houseStandard * heatingType/ heatingEfficiency.get(houseSettings.heatingType)/1000;
 
     return energyUse;
 }
