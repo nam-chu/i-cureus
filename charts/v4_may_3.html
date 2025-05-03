@@ -1,0 +1,61 @@
+GHG
+
+<div id="footprint" style="text-align:center; font-size:16px; margin-bottom:10px; color:#333;"></div>
+
+<div id="chartContainerComparison" style="max-width:600px; margin:auto;">
+  <canvas id="carbonChartComparison" width="450" height="320" style="display:block;"></canvas>
+</div>
+
+<!-- Flight Emissions Toggle -->
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;">
+  <strong style="display:block; margin-bottom:5px; text-align:center;">Flight Emissions:</strong>
+  <div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;">
+    <label style="display:flex; align-items:center; gap:6px;">
+      <input type="radio" name="flightToggle" value="with" checked
+        style="all: unset; appearance: radio; -webkit-appearance: radio; width:16px; height:16px;">
+      Current flights
+    </label>
+    <label style="display:flex; align-items:center; gap:6px;">
+      <input type="radio" name="flightToggle" value="additional"
+        style="all: unset; appearance: radio; -webkit-appearance: radio; width:16px; height:16px;">
+      Additional long-haul flight
+    </label>
+    <label style="display:flex; align-items:center; gap:6px;">
+      <input type="radio" name="flightToggle" value="without"
+        style="all: unset; appearance: radio; -webkit-appearance: radio; width:16px; height:16px;">
+      No flights
+    </label>
+  </div>
+</div>
+
+<!-- Heating Toggle -->
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;">
+  <strong style="display:block; margin-bottom:5px; text-align:center;">Heating Type:</strong>
+  <div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;">
+    <label><input type="radio" name="heatToggle" value="current" checked> Current heating</label>
+    <label><input type="radio" name="heatToggle" value="oil"> Heating oil</label>
+    <label><input type="radio" name="heatToggle" value="gas"> Natural gas</label>
+    <label><input type="radio" name="heatToggle" value="pump"> Heat pump</label>
+  </div>
+</div>
+
+<!-- Vehicle Toggle -->
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;">
+  <strong style="display:block; margin-bottom:5px; text-align:center;">Vehicle Type:</strong>
+  <div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;">
+    <label><input type="radio" name="vehicleToggle" value="current" checked> Current vehicle</label>
+    <label><input type="radio" name="vehicleToggle" value="hybrid"> Hybrid vehicle</label>
+    <label><input type="radio" name="vehicleToggle" value="electric"> Plug-in electric</label>
+    <label><input type="radio" name="vehicleToggle" value="none"> No vehicle</label>
+  </div>
+</div>
+
+<!-- Diet Toggle -->
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;">
+  <strong style="display:block; margin-bottom:5px; text-align:center;">Diet Type:</strong>
+  <div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;">
+    <label><input type="radio" name="dietToggle" value="current" checked> Current diet</label>
+    <label><input type="radio" name="dietToggle" value="vegetarian"> Vegetarian</label>
+    <label><input type="radio" name="dietToggle" value="vegan"> Vegan</label>
+  </div>
+</div>
