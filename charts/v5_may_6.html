@@ -1,0 +1,36 @@
+<style type="text/css">/* force all native radios back into view */
+  input[type="radio"] {
+    all: unset !important;
+    appearance: radio !important;
+    -webkit-appearance: radio !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    margin-right: 6px !important;
+  }
+</style>
+GHG
+<div style="text-align:center; font-size:16px; margin-bottom:10px; color:#333;" id="footprint">&nbsp;</div>
+
+<div style="max-width:600px; margin:auto;" id="chartContainerComparison"><canvas width="450" style="display:block;" id="carbonChartComparison" height="320"></canvas></div>
+
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;"><strong style="display:block; margin-bottom:5px; text-align:center;">Flight Emissions:</strong>
+
+<div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;"><label style="display:flex; align-items:center; gap:6px;"><input value="with" type="radio" name="flightToggle" checked="checked"> Current flights </label> <label style="display:flex; align-items:center; gap:6px;"> <input value="additional" type="radio" name="flightToggle"> Additional long-haul flight </label> <label style="display:flex; align-items:center; gap:6px;"> <input value="without" type="radio" name="flightToggle"> No flights </label></div>
+</div>
+
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;"><strong style="display:block; margin-bottom:5px; text-align:center;">Heating Type:</strong>
+
+<div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;"><label><input value="current" type="radio" name="heatToggle" checked="checked"> Current heating</label> <label><input value="oil" type="radio" name="heatToggle"> Heating oil</label> <label><input value="gas" type="radio" name="heatToggle"> Natural gas</label> <label><input value="pump" type="radio" name="heatToggle"> Heat pump</label></div>
+</div>
+
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;"><strong style="display:block; margin-bottom:5px; text-align:center;">Vehicle Type:</strong>
+
+<div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;"><label><input value="current" type="radio" name="vehicleToggle" checked="checked"> Current vehicle</label> <label><input value="hybrid" type="radio" name="vehicleToggle"> Hybrid vehicle</label> <label><input value="electric" type="radio" name="vehicleToggle"> Plug-in electric</label> <label><input value="none" type="radio" name="vehicleToggle"> No vehicle</label></div>
+</div>
+
+<div style="max-width:700px; margin:12px auto; font-size:14px; text-align:left; color:#333;"><strong style="display:block; margin-bottom:5px; text-align:center;">Diet Type:</strong>
+
+<div style="display:flex; justify-content:center; gap:25px; flex-wrap:wrap;"><label><input value="current" type="radio" name="dietToggle" checked="checked"> Current diet</label> <label><input value="vegetarian" type="radio" name="dietToggle"> Vegetarian</label> <label><input value="vegan" type="radio" name="dietToggle"> Vegan</label></div>
+</div>
