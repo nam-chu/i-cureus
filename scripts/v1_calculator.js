@@ -130,7 +130,7 @@ function calculateActualValues(settings) {
         actualHouse,
         actualTotal    
     };
-    return actualTotal;
+    return actual;
 }
 
 function calculateDiet(dietSettings) {
